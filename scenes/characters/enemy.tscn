@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpaiuynlrdd5f"]
+
+[ext_resource type="Texture2D" uid="uid://bqd5aa22qcgr5" path="res://sprites/enemy_spaceship.png" id="1_tqehs"]
+
+[node name="enemy" type="RigidBody2D"]
+position = Vector2(149, 69)
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_tqehs")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(6, -63, 36, -23, 64, -22, 94, 7, 92, 30, 58, 45, 23, 62, -25, 61, -61, 45, -93, 30, -92, 5, -61, -23, -23, -38, -3, -63)

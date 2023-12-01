@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bto5xlnkwgbld"]
+
+[ext_resource type="Texture2D" uid="uid://dsqi07qr0p2bn" path="res://sprites/missile.png" id="1_nrvcm"]
+[ext_resource type="Script" path="res://scripts/weapon.gd" id="1_wrfq4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o70pd"]
+radius = 19.0
+height = 64.0
+
+[node name="Missile" type="RigidBody2D"]
+position = Vector2(522, 305)
+gravity_scale = 0.0
+script = ExtResource("1_wrfq4")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_nrvcm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_o70pd")
