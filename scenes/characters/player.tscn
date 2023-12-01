@@ -3,25 +3,17 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_0voso"]
 [ext_resource type="Texture2D" uid="uid://7m3msbrpe2yk" path="res://sprites/player/spaceship_engine.png" id="1_rht5m"]
 
-[node name="Player" type="Area2D"]
-position = Vector2(500, 300)
-scale = Vector2(1.5, 1.5)
+[node name="Player" type="RigidBody2D"]
+position = Vector2(525, 309)
+gravity_scale = 0.0
 script = ExtResource("1_0voso")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_rht5m")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(5.72205e-06, -3.99999)
-scale = Vector2(4.6, 2.73333)
-polygon = PackedVector2Array(-0.579712, -9.7561, -3.91305, -2.19513, -6.66667, -2.43903, -9.85508, 2.92683, -9.85508, 7.07317, -3.04348, 7.07317, -3.76812, 9.75609, 3.91304, 9.75609, 3.04348, 7.07317, 9.85507, 7.07317, 9.85507, 2.43902, 6.52174, -2.43903, 3.62318, -3.17074, 1.44927, -9.7561)
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-gravity_scale = 0.0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
-position = Vector2(0, -4)
-scale = Vector2(4.6, 2.733)
+scale = Vector2(7.43008, 4.60983)
 polygon = PackedVector2Array(-0.579712, -9.7561, -3.91305, -2.19513, -6.66667, -2.43903, -9.85508, 2.92683, -9.85508, 7.07317, -3.04348, 7.07317, -3.76812, 9.75609, 3.91304, 9.75609, 3.04348, 7.07317, 9.85507, 7.07317, 9.85507, 2.43902, 6.52174, -2.43903, 3.62318, -3.17074, 1.44927, -9.7561)

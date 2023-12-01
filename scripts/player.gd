@@ -1,18 +1,18 @@
-extends Area2D
+extends RigidBody2D
 
-@export var speed = 50
-@export var rotational_speed = 0.03
+@export var slowdown_speed = -0.5
+@export var max_speed = 650
+@export var speed = 150
+@export var rotational_speed = 2000
 # TODO: engine_is_on makes it so that we avoid loading a sprite every frame, assuming
 # that sprite loads are too expensive to do that. Is this actually necessary?
 var engine_is_on
-var velocity
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	engine_is_on = false
 	$Sprite2D.texture = load("res://sprites/player/spaceship_engine_off.png")
-	velocity = Vector2.ZERO
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,18 +22,23 @@ func _process(delta):
 
 func handle_input(delta):
 	# Movement
+	var velocity = Vector2.ZERO
 	var new_movement = 0
 	if Input.is_action_pressed("down"):
 		new_movement = -1
 	if Input.is_action_pressed("up"):
 		new_movement = 1
 	if Input.is_action_pressed("left"):
-		rotation -= rotational_speed
+		apply_torque(-1 * rotational_speed)
 	if Input.is_action_pressed("right"):
-		rotation += rotational_speed
+		apply_torque(rotational_speed)
+	if Input.is_action_pressed("kill_movement"):
+		apply_central_force(linear_velocity * slowdown_speed)
+		if linear_velocity.length() <= 20:
+			set_linear_velocity(Vector2.ZERO)
 	if new_movement != 0:
 		var change_in_velocity = Vector2(speed * new_movement, 0)
-		velocity += change_in_velocity.rotated(rotation - deg_to_rad(90))
+		velocity = change_in_velocity.rotated(rotation - deg_to_rad(90))
 		if !engine_is_on:
 			# If a movement key is down, set sprite to engine on
 			$Sprite2D.texture = load("res://sprites/player/spaceship_engine.png")
@@ -44,13 +49,9 @@ func handle_input(delta):
 			$Sprite2D.texture = load("res://sprites/player/spaceship_engine_off.png")
 			engine_is_on = false
 	if velocity.x != 0 || velocity.y != 0:
-		# TODO: Do I want to add a force to our rigidbody instead?
-		#       Should I change the Node2D to a rigidbody?
-		#        ^ This would stop the overlap of having two colliders which is prob bad
-		# We need to change our position depending on velocity and then lower velocity
-		position += velocity * delta
-		velocity.x *= .95 if abs(velocity.x) > 1 else 0
-		velocity.y *= .95 if abs(velocity.y) > 1 else 0
+		# We only want to add a forward force if we are going slower than our max speed
+		if linear_velocity.length() < max_speed:
+			apply_force(velocity, Vector2.ZERO)
 	
 	# Combat
 	if Input.is_action_just_pressed("shoot"):
