@@ -55,7 +55,6 @@ func handle_input(delta):
 	
 	# Combat
 	if Input.is_action_just_pressed("shoot"):
-		# TODO: The missile should de-spawn after a certain number of seconds
 		# TODO: When colliding with anybody (even the player) it should explode and deal damage
 		
 		# Spawn a missile, add it to the parent scene
